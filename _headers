@@ -1,0 +1,26 @@
+# Home Tally — response headers for Cloudflare Pages (this file is read by Cloudflare Pages / Netlify;
+# GitHub Pages ignores it, so do not enable GitHub Pages for this repo).
+#
+# The full Content-Security-Policy already lives in index.html's <meta> tag, so it is NOT repeated here
+# (two copies would drift apart). Browsers apply a header CSP together with a meta CSP, so the line below
+# only adds what a <meta> cannot: frame-ancestors.
+#
+# Chosen on purpose:
+#  - COOP is "same-origin-allow-popups", not "same-origin": Google sign-in opens a popup, and strict
+#    "same-origin" would cut that popup off from the app.
+#  - No "camera=()" in Permissions-Policy: the camera buttons use <input type="file" capture>; it should be
+#    unaffected, but that is untested here.
+#  - HSTS has no "includeSubDomains", so it cannot affect other sites on the same domain.
+#  - .mjs gets an explicit JavaScript type because the bundled PDF viewer loads ES modules.
+
+/*
+  Content-Security-Policy: frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: geolocation=(), microphone=(), payment=()
+  Strict-Transport-Security: max-age=31536000
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+
+/*.mjs
+  Content-Type: text/javascript; charset=utf-8
